@@ -22,7 +22,7 @@ def build_grid(member):
             parts = comp[day]
             stars = len(parts.keys())
             total_stars += stars
-            cells.append("⭑⭑" if stars == 2 else "⭑")
+            cells.append("⭐⭐" if stars == 2 else "⭐")
         else:
             cells.append("▢")
     # Also provide a compact line with links to each day
@@ -60,7 +60,7 @@ def update_readme(block):
         return True
     return False
 
-def main():
+"""def main():
     data = fetch_json(URL, SESSION)
     me = pick_self_member(data)
     total_stars, table = build_grid(me)
@@ -77,6 +77,32 @@ def main():
     changed = update_readme(block)
     print("README updated." if changed else "No change.")
     # Exit nonzero if nothing changed? No—keep zero to avoid failing the workflow.
+    sys.exit(0)"""
+
+def render_year(year):
+    url = f"https://adventofcode.com/{year}/leaderboard/private/view/{LEADERBOARD_ID}.json"
+    data = fetch_json(url, SESSION)
+    me = pick_self_member(data)
+    total_stars, table = build_grid(me)
+    name = me.get("name") or f"User {me.get('id')}"
+    last_ts = int(me.get("last_star_ts", 0))
+    last_when = datetime.datetime.utcfromtimestamp(last_ts).strftime("%Y-%m-%d %H:%M UTC") if last_ts else "—"
+    return (
+        f"**{year} — {name}: {total_stars}⭐**  \n"
+        f"_Last updated: {last_when}_\n\n"
+        f"{table}\n"
+    )
+
+def main():
+    start_year = int(os.getenv("AOC_START_YEAR", 2024))
+    end_year = int(os.getenv("AOC_YEAR") or datetime.datetime.utcnow().year)
+    years = range(start_year, end_year + 1)
+
+    parts = [render_year(y) for y in years]
+    block = "\n".join(parts) + "\nLegend: ⭐⭐ = both parts, ⭐ = part 1, ▢ = not done"
+
+    changed = update_readme(block)
+    print("README updated." if changed else "No change.")
     sys.exit(0)
 
 if __name__ == "__main__":
