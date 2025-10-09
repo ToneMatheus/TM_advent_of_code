@@ -74,7 +74,7 @@ def render_year(year):
     name = me.get("name") or f"User {me.get('id')}"
     last_ts = int(me.get("last_star_ts", 0))
     # last_when = datetime.datetime.utcfromtimestamp(last_ts).strftime("%Y-%m-%d %H:%M UTC") if last_ts else "—"
-    last_when = datetime.now(ZoneInfo("America/Edmonton")).strftime("%Y-%m-%d %H:%M %Z")
+    last_when = datetime.datetime.fromtimestamp(last_ts, datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     return (
         f"**{year} — {name}: {total_stars}⭐**  \n"
