@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import json, os, sys, urllib.request, datetime, re, zoneinfo
+import json, os, sys, urllib.request, datetime, re
+from zoneinfo import ZoneInfo
 
 AOC_YEAR = os.getenv("AOC_YEAR") or str(datetime.datetime.utcnow().year)
 LEADERBOARD_ID = os.environ["AOC_LEADERBOARD_ID"]
@@ -76,7 +77,7 @@ def render_year(year):
     if last_ts:
         last_when = (
             datetime.fromtimestamp(last_ts, timezone.utc)
-            .astimezone(zoneinfo("America/Edmonton"))
+            .astimezone(ZoneInfo("America/Edmonton"))
             .strftime("%Y-%m-%d %H:%M %Z")
         )
     else:
@@ -94,7 +95,7 @@ def main():
     years = range(start_year, end_year + 1)
 
     parts = [render_year(y) for y in years]
-    generated_at = datetime.datetime.now(zoneinfo("America/Edmonton")).strftime("%Y-%m-%d %H:%M %Z")
+    generated_at = datetime.datetime.now(ZoneInfo("America/Edmonton")).strftime("%Y-%m-%d %H:%M %Z")
     block = (
         "\n".join(parts)
         + "\nLegend: ⭐⭐ = both parts, ⭐ = part 1, ▢ = not done\n"
