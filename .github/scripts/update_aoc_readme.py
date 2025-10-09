@@ -86,7 +86,9 @@ def render_year(year):
     total_stars, table = build_grid(me)
     name = me.get("name") or f"User {me.get('id')}"
     last_ts = int(me.get("last_star_ts", 0))
-    last_when = datetime.datetime.utcfromtimestamp(last_ts).strftime("%Y-%m-%d %H:%M UTC") if last_ts else "—"
+    # last_when = datetime.datetime.utcfromtimestamp(last_ts).strftime("%Y-%m-%d %H:%M UTC") if last_ts else "—"
+    last_when = datetime.datetime.fromtimestamp(last_ts, datetime.UTC).strftime("%Y-%m-%d %H:%M UTC")
+
     return (
         f"**{year} — {name}: {total_stars}⭐**  \n"
         f"_Last updated: {last_when}_\n\n"
