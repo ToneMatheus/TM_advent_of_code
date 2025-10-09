@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import json, os, sys, urllib.request, datetime, re, zoneinfo
+import json, os, sys, urllib.request, datetime, re
+from zoneinfo import ZoneInfo
 
 AOC_YEAR = os.getenv("AOC_YEAR") or str(datetime.datetime.utcnow().year)
 LEADERBOARD_ID = os.environ["AOC_LEADERBOARD_ID"]
