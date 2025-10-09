@@ -76,9 +76,7 @@ def render_year(year):
     # last_when = datetime.datetime.utcfromtimestamp(last_ts).strftime("%Y-%m-%d %H:%M UTC") if last_ts else "—"
     if last_ts:
         last_when = (
-            datetime.fromtimestamp(last_ts, timezone.utc)
-            .astimezone(ZoneInfo("America/Edmonton"))
-            .strftime("%Y-%m-%d %H:%M %Z")
+            datetime.datetime.now(ZoneInfo("America/Edmonton")).strftime("%Y-%m-%d %H:%M %Z")
         )
     else:
         last_when = "— not started"
