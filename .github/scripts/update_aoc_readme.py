@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, os, sys, urllib.request, datetime, re
+import json, os, sys, urllib.request, datetime, re, zoneinfo
 
 AOC_YEAR = os.getenv("AOC_YEAR") or str(datetime.datetime.utcnow().year)
 LEADERBOARD_ID = os.environ["AOC_LEADERBOARD_ID"]
@@ -73,7 +73,7 @@ def render_year(year):
     name = me.get("name") or f"User {me.get('id')}"
     last_ts = int(me.get("last_star_ts", 0))
     # last_when = datetime.datetime.utcfromtimestamp(last_ts).strftime("%Y-%m-%d %H:%M UTC") if last_ts else "—"
-    last_when = datetime.datetime.fromtimestamp(last_ts, datetime.UTC).strftime("%Y-%m-%d %H:%M UTC")
+    last_when = datetime.now(ZoneInfo("America/Edmonton")).strftime("%Y-%m-%d %H:%M %Z")
 
     return (
         f"**{year} — {name}: {total_stars}⭐**  \n"
@@ -87,6 +87,7 @@ def main():
     years = range(start_year, end_year + 1)
 
     parts = [render_year(y) for y in years]
+    generated_at = datetime.now(ZoneInfo("America/Edmonton")).strftime("%Y-%m-%d %H:%M %Z")
     block = (
         "\n".join(parts)
         + "\nLegend: ⭐⭐ = both parts, ⭐ = part 1, ▢ = not done\n"
