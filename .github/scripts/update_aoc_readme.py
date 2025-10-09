@@ -50,7 +50,7 @@ def update_readme(block):
         readme = f.read()
     new = re.sub(
         r"(<!-- AOC-START -->)(.*?)(<!-- AOC-END -->)",
-        r"\\1\n" + block + r"\n\\3",
+        r"\n" + block + r"\n",
         readme,
         flags=re.DOTALL
     )
@@ -72,7 +72,7 @@ def main():
         f"**{AOC_YEAR} — {name}: {total_stars}⭐**  \n"
         f"_Last updated: {last_when}_\n\n"
         f"{table}\n\n"
-        f"Legend: ⭑⭑ = both parts, ⭑ = part 1, ▢ = not done"
+        f"Legend: ⭐⭐ = both parts, ⭐ = part 1, ▢ = not done"
     )
     changed = update_readme(block)
     print("README updated." if changed else "No change.")
