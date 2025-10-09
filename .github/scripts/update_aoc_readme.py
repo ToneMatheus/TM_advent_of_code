@@ -73,7 +73,7 @@ def render_year(year):
     name = me.get("name") or f"User {me.get('id')}"
     last_ts = int(me.get("last_star_ts", 0))
     # last_when = datetime.datetime.utcfromtimestamp(last_ts).strftime("%Y-%m-%d %H:%M UTC") if last_ts else "—"
-        if last_ts:
+    if last_ts:
         last_when = (
             datetime.fromtimestamp(last_ts, timezone.utc)
             .astimezone(zoneinfo("America/Edmonton"))
