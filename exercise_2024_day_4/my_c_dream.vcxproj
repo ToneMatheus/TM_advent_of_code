@@ -128,7 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.c" />
+    <ClCompile Include="exercise_2024_day_4.c" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />

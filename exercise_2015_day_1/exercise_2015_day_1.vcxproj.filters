@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.c">
+    <ClCompile Include="exercise_2015_day_1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
