@@ -5,7 +5,7 @@
 int main(void)
 {
 	FILE* fp;
-	int i = 0, num = 0, zeroCount = 0, dialNumber = 50;
+	int i = 0, num = 0, zeroCount = 0, dialNumber = 50, test = 0, zeroCount_2 = 0;
 	char FILENAME[25] = "input.txt", line[BUFSIZ], strNum[3], dir;
 
 	if ((fp = fopen(FILENAME, "r")) == NULL)
@@ -15,22 +15,38 @@ int main(void)
 	}
     printf("The dial starts by pointing at %d\n", dialNumber);
 
-	while (fgets(line, BUFSIZ, fp))
-	{
-		if (sscanf(line, "%c%d", &dir, &num) != 2)
-			continue;
+    while (fgets(line, BUFSIZ, fp))
+    {
+        if (sscanf(line, "%c%d", &dir, &num) != 2)
+            continue;
 
-		if (dir == 'L')
-			dialNumber = ((dialNumber - num) % 100 + 100) % 100;
-		else
-			dialNumber = (dialNumber + num) % 100;
+        int clicks = num;  
 
-		printf("The dial is rotated %c%d to point at %d\n", dir, num, dialNumber);
+        // click by click
+        for (int step = 0; step < clicks; step++)
+        {
+            if (dir == 'L')
+            {
+                dialNumber--;
+                if (dialNumber < 0)
+                    dialNumber = 99;   
+            }
+            else  
+            {
+                dialNumber = (dialNumber + 1) % 100;
+            }
 
-		if (dialNumber == 0)
-			zeroCount++;
-	}
+            if (dialNumber == 0)
+                zeroCount_2++;
+        }
 
-	printf("The passcode is = %d", zeroCount);
+        printf("The dial is rotated %c%d to point at %d\n", dir, num, dialNumber);
+
+        if (dialNumber == 0)
+            zeroCount++;
+    }
+
+	printf("The passcode is = %d, Method 0x434C49434B passcode = %d", zeroCount, zeroCount_2);
+
 	return 0;
 }
