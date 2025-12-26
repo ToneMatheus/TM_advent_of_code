@@ -2,8 +2,8 @@ name: Update AoC Progress
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "17 * * * *"   # hourly at :17 UTC during December is nice
+#  schedule:
+#    - cron: "17 * * * *"   # hourly at :17 UTC during December is nice
 
 jobs:
   update:
