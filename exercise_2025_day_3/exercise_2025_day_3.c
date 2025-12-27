@@ -49,6 +49,7 @@ int main(int argc , char * argv[])
 	printf("The sum of all data is: %lld", result);
 
 	free(str);
+	fclose(fp);
 	return 0;
 }
 
