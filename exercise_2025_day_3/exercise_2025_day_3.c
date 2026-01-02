@@ -3,15 +3,27 @@
 #include <stdio.h>
 #include <string.h>
 
-int find_largest_possible_joltage(char*);
+int find_largest_possible_joltage_part_1(char*);
+long long find_largest_possible_joltage_part_2(char* s);
 
 int main(int argc , char * argv[])
 {
 	FILE* fp;
-	int char_count = 0, i = 0;
+	int char_count = 0, i = 0, part = 1; // default
 	char* filename = "input.txt", chr, *str;
 	long long int result = 0;
 	size_t len;
+
+	
+	if (argc >= 2) 
+	{
+		part = atoi(argv[1]);
+		if (part != 1 && part != 2) 
+		{
+			fprintf(stderr, "Usage: %s [1|2]\n", argv[0]);
+			return 1;
+		}
+	}
 	
 	if ((fp = fopen(filename, "r")) == NULL)
 	{
@@ -42,7 +54,15 @@ int main(int argc , char * argv[])
 		if (len == 0) continue;
 
 		printf("test string: '%s'\n", str);
-		result = find_largest_possible_joltage(str) + result;
+		if (part == 1) 
+		{
+			result = find_largest_possible_joltage_part_1(str) + result;      
+		}
+		else 
+		{
+			result = find_largest_possible_joltage_part_2(str) + result;
+		}
+		
 	}
 
 
@@ -53,7 +73,7 @@ int main(int argc , char * argv[])
 	return 0;
 }
 
-int find_largest_possible_joltage(char* str)
+int find_largest_possible_joltage_part_1(char* str)
 {
 	int i, j, first, second, val, result = 0, len = strlen(str);
 
@@ -67,4 +87,37 @@ int find_largest_possible_joltage(char* str)
 	}
 	printf("first: %d, second:%d, number: %d\n", first, second, val);
 	return result;
+}
+
+long long find_largest_possible_joltage_part_2(const char* s) 
+{
+	int n = (int)strlen(s);
+	int keep = 12;
+	int k = n - keep;                 // digits to remove
+	if (k < 0) return 0;              // check enough digits
+
+	char* stack = (char*)malloc(n + 1);
+	int top = 0;
+
+	for (int i = 0; i < n; i++)
+	{
+		char c = s[i];
+		while (k > 0 && top > 0 && stack[top - 1] < c)
+		{
+			top--;
+			k--;
+		}
+		stack[top++] = c;
+	}
+
+	top -= k;
+
+	/* build exactly 12 digits */
+	char out[13];
+	for (int i = 0; i < keep; i++) out[i] = stack[i];
+	out[12] = '\0';
+
+	free(stack);
+
+	return strtoll(out, NULL, 10);
 }
