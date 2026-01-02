@@ -53,7 +53,7 @@ int main(int argc , char * argv[])
 		}
 		if (len == 0) continue;
 
-		printf("test string: '%s'\n", str);
+		/*printf("test string: '%s'\n", str);*/
 		if (part == 1) 
 		{
 			result = find_largest_possible_joltage_part_1(str) + result;      
@@ -89,7 +89,7 @@ int find_largest_possible_joltage_part_1(char* str)
 	return result;
 }
 
-long long find_largest_possible_joltage_part_2(const char* s) 
+long long find_largest_possible_joltage_part_2(char* s) 
 {
 	int n = (int)strlen(s);
 	int keep = 12;
